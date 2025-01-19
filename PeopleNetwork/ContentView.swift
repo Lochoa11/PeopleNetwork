@@ -48,7 +48,9 @@ struct ContentView: View {
             }
             let (data, _) = try await URLSession.shared.data(for: request)
             print("Before decodedResponse")
-            let decodedResponse = try JSONDecoder().decode([User].self, from: data)
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
+            let decodedResponse = try decoder.decode([User].self, from: data)
             users = decodedResponse
             print("End of do block")
         } catch {

@@ -16,11 +16,11 @@ struct User: Decodable, Identifiable, Hashable {
     let email: String
     let address: String
     let about: String
-    let registered: String
+    let registered: Date
     let tags: [String]
     let friends: [Friend]
     
-    init(id: String, isActive: Bool, name: String, age: Int, company: String, email: String, address: String, about: String, registered: String, tags: [String], friends: [Friend]) {
+    init(id: String, isActive: Bool, name: String, age: Int, company: String, email: String, address: String, about: String, registered: Date, tags: [String], friends: [Friend]) {
         self.id = id
         self.isActive = isActive
         self.name = name
