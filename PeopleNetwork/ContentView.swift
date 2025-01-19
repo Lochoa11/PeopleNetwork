@@ -43,6 +43,9 @@ struct ContentView: View {
         request.httpMethod = "GET"
         
         do {
+            if !users.isEmpty {
+                return
+            }
             let (data, _) = try await URLSession.shared.data(for: request)
             print("Before decodedResponse")
             let decodedResponse = try JSONDecoder().decode([User].self, from: data)
