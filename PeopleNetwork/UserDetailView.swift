@@ -50,6 +50,8 @@ struct UserDetailView: View {
                 }
             }
         }
+        .listStyle(.grouped)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

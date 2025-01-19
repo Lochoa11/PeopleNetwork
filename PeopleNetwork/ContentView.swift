@@ -37,22 +37,18 @@ struct ContentView: View {
     }
     
     func fetchData() async {
+        guard users.isEmpty else {
+            return
+        }
         let url = URL(string: "https://www.hackingwithswift.com/samples/friendface.json")!
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "GET"
-        
         do {
-            if !users.isEmpty {
-                return
-            }
             let (data, _) = try await URLSession.shared.data(for: request)
-            print("Before decodedResponse")
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .iso8601
-            let decodedResponse = try decoder.decode([User].self, from: data)
-            users = decodedResponse
-            print("End of do block")
+            users = try decoder.decode([User].self, from: data)
         } catch {
             print(String(describing: error))
         }
