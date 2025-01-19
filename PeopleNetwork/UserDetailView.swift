@@ -56,9 +56,9 @@ struct UserDetailView: View {
 }
 
 #Preview {
-    let friend = Friend(id: "321", name: "hello2")
+    let friend = Friend(id: UUID(), name: "hello2")
     let formatter = ISO8601DateFormatter()
     let date = formatter.date(from: "2015-11-10T01:47:18-00:00") ?? .now
-      let user = User(id: "123", isActive: true, name: "hello", age: 21, company: "hello", email: "hello@hello.com", address: "123 hello lane", about: "hello 123", registered: date, tags: ["hello", "world"], friends: [friend])
+      let user = User(id: UUID(), isActive: true, name: "hello", age: 21, company: "hello", email: "hello@hello.com", address: "123 hello lane", about: "hello 123", registered: date, tags: ["hello", "world"], friends: [friend])
     UserDetailView(user: user)
 }
