@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct User: Decodable, Identifiable {    
+struct User: Decodable, Identifiable, Hashable {    
     let id: String
     let isActive: Bool
     let name: String
