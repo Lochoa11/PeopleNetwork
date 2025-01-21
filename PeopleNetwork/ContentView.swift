@@ -17,25 +17,17 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            List{
-                ForEach(users) { user in
-                    NavigationLink(value: user) {
-                        HStack {
-                            Text(user.isActive ? "🟢" : "🔴")
-                            Text(user.name)
-                        }
+            List(users){ user in
+                NavigationLink(value: user) {
+                    HStack {
+                        Text(user.isActive ? "🟢" : "🔴")
+                        Text(user.name)
                     }
                 }
             }
             .navigationTitle("People Network")
-            .onAppear() {
-                Task {
-                    if !users.isEmpty {
-                        return
-                    } else {
-                        await fetchData()
-                    }
-                }
+            .task {
+                await fetchData()
             }
             .navigationDestination(for: User.self) { user in
                 UserDetailView(user: user)
