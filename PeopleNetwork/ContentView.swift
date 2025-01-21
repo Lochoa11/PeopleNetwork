@@ -11,7 +11,7 @@ import SwiftUI
 struct ContentView: View {
     @Environment(\.modelContext) var modelContext
     
-    @Query private var users: [User]
+    @Query(sort: \User.name) private var users: [User]
     
     @State private var usersString: String = ""
     
@@ -44,22 +44,26 @@ struct ContentView: View {
     }
     
     func fetchData() async {
-//        guard users.isEmpty else {
-//            return
-//        }
-        print("Fetching data")
-        let url = URL(string: "https://www.hackingwithswift.com/samples/friendface.json")!
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "GET"
+        guard users.isEmpty else {
+            return
+        }
         do {
+            print("Fetching data")
+            let url = URL(string: "https://www.hackingwithswift.com/samples/friendface.json")!
+            var request = URLRequest(url: url)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "GET"
             let (data, _) = try await URLSession.shared.data(for: request)
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .iso8601
-            let temp: [User] = try decoder.decode([User].self, from: data)
+            let temp = try decoder.decode([User].self, from: data)
+            let insertContext = ModelContext(modelContext.container)
+            
             for user in temp {
-                modelContext.insert(user)
+                insertContext.insert(user)
             }
+            
+            try insertContext.save()
         } catch {
             print(String(describing: error))
         }

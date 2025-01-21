@@ -10,6 +10,20 @@ import SwiftUI
 
 @Model
 class User: Codable {
+    enum CodingKeys: String, CodingKey {
+        case id
+        case isActive
+        case name
+        case age
+        case company
+        case email
+        case address
+        case about
+        case registered
+        case tags
+        case friends
+    }
+    
     let id: UUID
     var isActive: Bool
     var name: String
@@ -38,32 +52,19 @@ class User: Codable {
     
     required init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decode(UUID.self, forKey: .id)
-        self.isActive = try container.decode(Bool.self, forKey: .isActive)
-        self.name = try container.decode(String.self, forKey: .name)
-        self.age = try container.decode(Int.self, forKey: .age)
-        self.company = try container.decode(String.self, forKey: .company)
-        self.email = try container.decode(String.self, forKey: .email)
-        self.address = try container.decode(String.self, forKey: .address)
-        self.about = try container.decode(String.self, forKey: .about)
-        self.registered = try container.decode(Date.self, forKey: .registered)
-        self.tags = try container.decode([String].self, forKey: .tags)
-        self.friends = try container.decode([Friend].self, forKey: .friends)
+        id = try container.decode(UUID.self, forKey: .id)
+        isActive = try container.decode(Bool.self, forKey: .isActive)
+        name = try container.decode(String.self, forKey: .name)
+        age = try container.decode(Int.self, forKey: .age)
+        company = try container.decode(String.self, forKey: .company)
+        email = try container.decode(String.self, forKey: .email)
+        address = try container.decode(String.self, forKey: .address)
+        about = try container.decode(String.self, forKey: .about)
+        registered = try container.decode(Date.self, forKey: .registered)
+        tags = try container.decode([String].self, forKey: .tags)
+        friends = try container.decode([Friend].self, forKey: .friends)
     }
     
-    enum CodingKeys: String, CodingKey {
-        case id
-        case isActive
-        case name
-        case age
-        case company
-        case email
-        case address
-        case about
-        case registered
-        case tags
-        case friends
-    }
     
     func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
