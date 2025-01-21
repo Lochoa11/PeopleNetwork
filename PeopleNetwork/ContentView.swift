@@ -40,6 +40,7 @@ struct ContentView: View {
         guard users.isEmpty else {
             return
         }
+        print("Fetching data")
         let url = URL(string: "https://www.hackingwithswift.com/samples/friendface.json")!
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")

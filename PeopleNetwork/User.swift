@@ -9,7 +9,7 @@ import SwiftData
 import SwiftUI
 
 @Model
-class User: Decodable {
+class User: Codable {
     let id: UUID
     var isActive: Bool
     var name: String
@@ -63,5 +63,20 @@ class User: Decodable {
         case registered
         case tags
         case friends
+    }
+    
+    func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.id, forKey: .id)
+        try container.encode(self.isActive, forKey: .isActive).self
+        try container.encode(self.name, forKey: .name)
+        try container.encode(self.age, forKey: .age)
+        try container.encode(self.company, forKey: .company)
+        try container.encode(self.email, forKey: .email)
+        try container.encode(self.address, forKey: .address)
+        try container.encode(self.about, forKey: .about)
+        try container.encode(self.registered, forKey: .registered)
+        try container.encode(self.tags, forKey: .tags)
+        try container.encode(self.friends, forKey: .friends)
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-class Friend: Decodable {
+class Friend: Codable {
     let id: UUID
     var name: String
     
@@ -27,5 +27,11 @@ class Friend: Decodable {
     enum CodingKeys: String, CodingKey {
         case id
         case name
+    }
+    
+    func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.id, forKey: .id)
+        try container.encode(self.name, forKey: .name)
     }
 }
